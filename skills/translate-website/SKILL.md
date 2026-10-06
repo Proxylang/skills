@@ -57,3 +57,14 @@ if anything below is unclear.
 - Limits: one trial per website, 2,000 free words per website in total, and
   3 new trials per connection per day. A site already on a Proxylang account
   cannot start a trial; its owner adds languages from the dashboard.
+- Never put a made-up or placeholder key in the site. If start fails, show
+  `tell_user`; if you cannot make requests, give the user
+  `https://proxylang.dev/start?domain=<site>&languages=<code>`.
+- Lost the agent_token? Start again from the same connection: it replaces
+  your unsaved trial and keeps the words used.
+- Wrong site, or need to test on another one? Do not start again.
+  `POST https://proxylang.dev/api/agent/site` with the same header:
+  `{"domain": "new-site.com"}` moves the trial (the old site stops), and
+  `{"domain": "test.example.com", "action": "add"}` keeps the site and lets
+  the same tag work on a test site too (up to 3). Same claim link and free
+  words either way.
