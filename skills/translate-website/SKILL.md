@@ -4,7 +4,7 @@ description: Makes a website readable in other languages with Proxylang, in minu
 compatibility: Needs network access to https://proxylang.dev. Works in any agent that can make HTTP requests and edit the site's code.
 metadata:
   author: proxylang
-  version: "1.0"
+  version: "1.1"
   homepage: https://proxylang.dev
 ---
 
@@ -39,12 +39,26 @@ if anything below is unclear.
 3. **Install.** Follow `install_instructions` from the reply. Use
    `localhost_script_tag` only for local development.
 
-4. **Check.** `POST https://proxylang.dev/api/agent/check` with
+4. **Match the site's look.** Read the site's brand color, background, text
+   color, button roundness and dark mode, then send only the fields to change:
+
+   ```
+   POST https://proxylang.dev/api/agent/widget-style
+   Authorization: Bearer <agent_token>
+   Content-Type: application/json
+
+   {"accent": "#0a7cff", "triggerBgLight": "#ffffff", "triggerTextLight": "#111827", "borderRadius": "rounded"}
+   ```
+
+   Colors are `#hex`, `rgb()`, `hsl()` or a CSS color name, each with a
+   `Light` and `Dark` version. Every field is in agents.md, step 7.
+
+5. **Check.** `POST https://proxylang.dev/api/agent/check` with
    `Authorization: Bearer <agent_token>`. If `words_translated` is 0, ask the
    user to open `preview_url` in their browser, then check again. A server
    request cannot trigger translations.
 
-5. **Finish.** `GET https://proxylang.dev/api/agent/next` with the same
+6. **Finish.** `GET https://proxylang.dev/api/agent/next` with the same
    header. Show the user `message_for_user` as it is, translated into the
    language they write in, with `<claim_url>` replaced by the saved link.
    Do not add other features or prices.
